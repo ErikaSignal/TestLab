@@ -32,8 +32,9 @@ public class Calculator {
             int currentNum = Integer.parseInt(num);
             if (currentNum < 0) {
                 negatives.add(num);
+            } else if (currentNum <= 1000) {
+                sum += currentNum;
             }
-            sum += currentNum;
         }
         if (!negatives.isEmpty()) {
             throw new IllegalArgumentException("Negatives not allowed: " + String.join(", ", negatives));
