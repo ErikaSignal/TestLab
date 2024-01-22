@@ -74,4 +74,11 @@ class CalculatorTest {
         int result = calculator.add("//[***]\n1***2***3");
         assertEquals(6, result);
     }
+
+    @Test
+    public void testMultipleDelimitersReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("//[*][%]\n1*2%3");
+        assertEquals(6, result);
+    }
 }
