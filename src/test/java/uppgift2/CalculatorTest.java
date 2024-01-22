@@ -56,9 +56,7 @@ class CalculatorTest {
     @Test
     public void testNegativeNumbersThrowsException(){
         Calculator calculator = new Calculator();
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            calculator.add("1,-2,3,-4");
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("1,-2,3,-4"));
 
         assertEquals("Negatives not allowed: -2, -4", exception.getMessage());
     }
@@ -68,5 +66,12 @@ class CalculatorTest {
         Calculator calculator = new Calculator();
         int result = calculator.add("2,1001");
         assertEquals(2, result);
+    }
+
+    @Test
+    public void testDelimiterOfAnyLengthReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("//[***]\n1***2***3");
+        assertEquals(6, result);
     }
 }

@@ -2,30 +2,26 @@ package uppgift2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator {
 
     public int add(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
-        } else {
-            if (numbers.startsWith("//")) {
-                int delimiterEndIndex = numbers.indexOf("\n");
-                String customDelimiter = numbers.substring(2, delimiterEndIndex);
-                String numbersWithoutDelimiter = numbers.substring(delimiterEndIndex + 1);
-
-                String[] numArray = numbersWithoutDelimiter.split(customDelimiter);
-                return sumNumbers(numArray);
-            } else {
-                String[] numArray = numbers.split("[,\n]");
-                return sumNumbers(numArray);
-            }
-
-
         }
+        Matcher matcher = Pattern.compile("-?\\d+").matcher(numbers);
+        List<String> numberList = new ArrayList<>();
+        while (matcher.find()) {
+            numberList.add(matcher.group());
+        }
+        return sumNumbers(numberList);
     }
 
-    private int sumNumbers(String[] numArray) {
+
+
+    private int sumNumbers(List<String> numArray) {
         List<String> negatives = new ArrayList<>();
         int sum = 0;
         for (String num : numArray) {
