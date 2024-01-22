@@ -20,4 +20,12 @@ class CalculatorTest {
 
         assertEquals(15, result);
     }
+
+    @Test
+    public void testAddWithNewLineReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("1\n2,3");
+
+        assertEquals(6, result);
+    }
 }
