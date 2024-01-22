@@ -14,6 +14,22 @@ class CalculatorTest {
     }
 
     @Test
+    public void testAddNumberStringReturnsNumber(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("3");
+
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void testAddTwoNumbersStringReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("2,2");
+
+        assertEquals(4, result);
+    }
+
+    @Test
     public void testAddAnyNumbersReturnsSum(){
         Calculator calculator = new Calculator();
         int result = calculator.add("1,2,3,4,5");
@@ -27,5 +43,13 @@ class CalculatorTest {
         int result = calculator.add("1\n2,3");
 
         assertEquals(6, result);
+    }
+
+    @Test
+    public void testCustomDelimiterReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("//;\n1;2");
+
+        assertEquals(3, result);
     }
 }
