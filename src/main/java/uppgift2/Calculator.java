@@ -1,5 +1,8 @@
 package uppgift2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Calculator {
 
     public int add(String numbers) {
@@ -12,20 +15,29 @@ public class Calculator {
                 String numbersWithoutDelimiter = numbers.substring(delimiterEndIndex + 1);
 
                 String[] numArray = numbersWithoutDelimiter.split(customDelimiter);
-                int sum = 0;
-                for (String num : numArray) {
-                    sum += Integer.parseInt(num);
-                }
-                return sum;
+                return sumNumbers(numArray);
             } else {
-                // Split by both commas and new lines
                 String[] numArray = numbers.split("[,\n]");
-                int sum = 0;
-                for (String num : numArray) {
-                    sum += Integer.parseInt(num);
-                }
-                return sum;
+                return sumNumbers(numArray);
             }
+
+
         }
+    }
+
+    private int sumNumbers(String[] numArray) {
+        List<String> negatives = new ArrayList<>();
+        int sum = 0;
+        for (String num : numArray) {
+            int currentNum = Integer.parseInt(num);
+            if (currentNum < 0) {
+                negatives.add(num);
+            }
+            sum += currentNum;
+        }
+        if (!negatives.isEmpty()) {
+            throw new IllegalArgumentException("Negatives not allowed: " + String.join(", ", negatives));
+        }
+        return sum;
     }
 }
