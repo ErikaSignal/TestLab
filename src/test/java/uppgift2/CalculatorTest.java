@@ -12,4 +12,12 @@ class CalculatorTest {
 
         assertEquals(0, result);
     }
+
+    @Test
+    public void testAddAnyNumbersReturnsSum(){
+        Calculator calculator = new Calculator();
+        int result = calculator.add("1,2,3,4,5");
+
+        assertEquals(15, result);
+    }
 }
