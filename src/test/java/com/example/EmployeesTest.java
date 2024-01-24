@@ -23,7 +23,7 @@ class EmployeesTest {
         Mockito.verify(bankService, Mockito.times(2)).pay(Mockito.anyString(), Mockito.anyDouble());
 
         assertEquals(2, payment);
-        assertEquals(true, employee1.isPaid());
-        assertEquals(true, employee2.isPaid());
+        assertTrue(employee1.isPaid());
+        assertTrue(employee2.isPaid());
     }
 }
