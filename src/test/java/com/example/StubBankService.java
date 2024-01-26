@@ -8,9 +8,8 @@ public class StubBankService implements BankService{
             throw new RuntimeException("Payment failed");
         }
         System.out.println("Payment executed successfully for ID: " + id);
-    }
-
-    public void setThrowException(boolean throwException) {
+    }public void setThrowException(boolean throwException) {
         this.throwException = throwException;
     }
+
 }

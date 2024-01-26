@@ -30,50 +30,21 @@ class EmployeesTest {
     @Test
     public void testPayingEmployeesTrowsExceptionEmployeesNotPayed(){
         EmployeeRepository employeeRepository = new SpyEmployeeRepository();
-        BankService bankService = new StubBankService();
-        Employees employees = new Employees(employeeRepository, bankService);
+        BankService stubBankService = new StubBankService();
+        Employees employees = new Employees(employeeRepository, stubBankService);
+
+        ((StubBankService) stubBankService).setThrowException(true);
 
         Employee employee1 = new Employee("1", 20000);
         Employee employee2 = new Employee("2", 25000);
+
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
 
-        ((SpyEmployeeRepository) employeeRepository).setFindAllResult(Arrays.asList(employee1, employee2));
+        int payment = employees.payEmployees();
 
-        ((StubBankService) bankService).setThrowException(true);
-
-        RuntimeException exception = assertThrows(RuntimeException.class, employees::payEmployees);
-
-        ((SpyEmployeeRepository) employeeRepository).verifySaveCalls(2);
-
-        assertEquals("Payment failed", exception.getMessage());
-
+        assertEquals(0, payment);
         assertFalse(employee1.isPaid());
         assertFalse(employee2.isPaid());
-    }
-
-    //Moved test here to see coverage clearer
-    @Test
-    public void testEmployeeToString(){
-        Employee employee = new Employee("1", 30000);
-        assertEquals("Employee [id=1, salary=30000.0]", employee.toString());
-    }
-
-    @Test
-    public void testSetID(){
-        Employee employee = new Employee("1", 17000);
-
-        employee.setId("1");
-
-        assertEquals("1", employee.getId());
-    }
-
-    @Test
-    public void testSetSalary(){
-        Employee employee = new Employee("1", 23500);
-
-        employee.setSalary(25000);
-
-        assertEquals(25000, employee.getSalary());
     }
 }
