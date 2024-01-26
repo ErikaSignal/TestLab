@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class SpyEmployeeRepository implements EmployeeRepository{
 
     private List<Employee> savedEmployees = new ArrayList<>();
@@ -20,5 +22,13 @@ public class SpyEmployeeRepository implements EmployeeRepository{
 
     public List<Employee> getSavedEmployees() {
         return savedEmployees;
+    }
+
+    public void setFindAllResult(List<Employee> employees) {
+        savedEmployees = employees;
+    }
+
+    public void verifySaveCalls(int expectedCalls) {
+        assertEquals(expectedCalls, savedEmployees.size());
     }
 }

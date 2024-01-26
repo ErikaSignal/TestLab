@@ -27,6 +27,31 @@ class EmployeesTest {
         assertTrue(employee2.isPaid());
     }
 
+    @Test
+    public void testPayingEmployeesTrowsExceptionEmployeesNotPayed(){
+        EmployeeRepository employeeRepository = new SpyEmployeeRepository();
+        BankService bankService = new StubBankService();
+        Employees employees = new Employees(employeeRepository, bankService);
+
+        Employee employee1 = new Employee("1", 20000);
+        Employee employee2 = new Employee("2", 25000);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+
+        ((SpyEmployeeRepository) employeeRepository).setFindAllResult(Arrays.asList(employee1, employee2));
+
+        ((StubBankService) bankService).setThrowException(true);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, employees::payEmployees);
+
+        ((SpyEmployeeRepository) employeeRepository).verifySaveCalls(2);
+
+        assertEquals("Payment failed", exception.getMessage());
+
+        assertFalse(employee1.isPaid());
+        assertFalse(employee2.isPaid());
+    }
+
     //Moved test here to see coverage clearer
     @Test
     public void testEmployeeToString(){
