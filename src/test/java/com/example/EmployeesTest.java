@@ -30,10 +30,10 @@ class EmployeesTest {
     @Test
     public void testPayingEmployeesTrowsExceptionEmployeesNotPayed(){
         EmployeeRepository employeeRepository = new SpyEmployeeRepository();
-        BankService stubBankService = new StubBankService();
+        StubBankService stubBankService = new StubBankService();
         Employees employees = new Employees(employeeRepository, stubBankService);
 
-        ((StubBankService) stubBankService).setThrowException(true);
+        stubBankService.setThrowException(true);
 
         Employee employee1 = new Employee("1", 20000);
         Employee employee2 = new Employee("2", 25000);
